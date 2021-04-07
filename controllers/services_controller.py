@@ -1,21 +1,16 @@
-from flask_restful import Resource, fields, marshal_with
+from flask_restful import Resource
+from flask_apispec import marshal_with, doc
 from models.service import ServiceModel
+from flask_apispec.views import MethodResource
 
-# Controller for Services
-
-# JSONE decorator
-service_fields = {
-    'id': fields.Integer,
-    'title': fields.String,
-    'description': fields.String,
-    'position': fields.Integer
-}
+from models.service_schema import ServiceSchema
 
 
+# Services controller
 # Get all services
-
-class ServicesController(Resource):
-    @marshal_with(service_fields)
+class ServicesController(MethodResource, Resource):
+    @doc(description='Get all services', tags=['Services'])
+    @marshal_with(ServiceSchema(many=True))
     def get(self):
         result = ServiceModel.query.all()
         return result
