@@ -1,6 +1,7 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, abort
 from flask_apispec import marshal_with, doc
 from flask_apispec.views import MethodResource
+from sqlalchemy.exc import IntegrityError
 
 from models.service import ServiceModel
 from models.service_schema import ServiceSchema
@@ -33,7 +34,9 @@ class ServicesController(MethodResource, Resource):
         newServise.title = args["title"]
         newServise.description = args["description"]
         newServise.position = len(ServiceModel.query.all()) + 1
-
-        db.session.add(newServise)
-        db.session.commit()
+        try:
+            db.session.add(newServise)
+            db.session.commit()
+        except IntegrityError as e:
+            abort(400, message="Service dublicated")
         return {"message": "Service successfully created", "service": schema.dump(newServise)}, 201

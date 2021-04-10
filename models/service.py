@@ -8,4 +8,4 @@ class ServiceModel(db.Model):
     position = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f"DB SERVICE: id={self.id}, title={self.title}, desc={self.description}, order={self.position}"
+        return f"DB SERVICE: id={self.id}, title={self.title}, desc={self.description}, position={self.position}"

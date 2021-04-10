@@ -8,6 +8,7 @@ from models.db import db
 
 from controllers.services_controller import ServicesController
 from controllers.service_controller import ServiceController
+from controllers.service_swich_controller import ServiceSwitchController
 
 
 # init app
@@ -44,6 +45,9 @@ docs.register(ServicesController)
 api.add_resource(ServiceController,
                  "/service/<int:service_id>")
 docs.register(ServiceController)
+api.add_resource(ServiceSwitchController,
+                 "/service/<int:service_id>/swap")
+docs.register(ServiceSwitchController)
 
 if __name__ == "__main__":
     app.run(debug=True)
