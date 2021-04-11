@@ -9,6 +9,7 @@ from models.db import db
 from controllers.services_controller import ServicesController
 from controllers.service_controller import ServiceController
 from controllers.service_swich_controller import ServiceSwitchController
+from controllers.contact_controller import ContactController
 
 
 # init app
@@ -48,6 +49,10 @@ docs.register(ServiceController)
 api.add_resource(ServiceSwitchController,
                  "/service/<int:service_id>/swap")
 docs.register(ServiceSwitchController)
+
+# Contact routs
+api.add_resource(ContactController, "/contact")
+docs.register(ContactController)
 
 if __name__ == "__main__":
     app.run(debug=True)
