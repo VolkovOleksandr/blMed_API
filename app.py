@@ -10,6 +10,7 @@ from controllers.services_controller import ServicesController
 from controllers.service_controller import ServiceController
 from controllers.service_swich_controller import ServiceSwitchController
 from controllers.contact_controller import ContactController
+from controllers.showroom_controller import ShowroomController
 
 
 # init app
@@ -53,6 +54,9 @@ docs.register(ServiceSwitchController)
 # Contact routs
 api.add_resource(ContactController, "/contact")
 docs.register(ContactController)
+
+api.add_resource(ShowroomController, "/contact/showroom")
+docs.register(ShowroomController)
 
 if __name__ == "__main__":
     app.run(debug=True)
