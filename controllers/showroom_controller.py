@@ -12,64 +12,58 @@ from models.db import db
 # POST request fields
 contactPostArgs = reqparse.RequestParser()
 contactPostArgs.add_argument(
-    "address", type=str, help="Adress is required", required=True)
-contactPostArgs.add_argument("email", type=str,
-                             help="Email is required", required=True)
-contactPostArgs.add_argument("phone", type=str,
-                             help="Phone is required", required=True)
+    "address", type=str, help="Address is required", required=True)
+contactPostArgs.add_argument(
+    "email", type=str, help="Email is required", required=True)
+contactPostArgs.add_argument(
+    "phone", type=str, help="Phone is required", required=True)
 
 
-# Showroom controller
+# Showroom by ID controller
 class ShowroomController(MethodResource, Resource):
-    # Get all showrooms
-    @doc(description='Get all showrooms', tags=['Contact'])
-    @marshal_with(ShowroomSchema(many=True))
-    def get(self):
+    # Get showroom by ID
+    @doc(description='Get showroom by ID', tags=['Contact'])
+    @marshal_with(ShowroomSchema())
+    def get(self, shoowroom_id):
         # Parse data from DB to JSON
-        showroomSchema = ShowroomSchema(many=True)
-        showroomModel = ShowroomModel.query.all()
+        showroomSchema = ShowroomSchema()
+        showroomModel = ShowroomModel.query.get(shoowroom_id)
         showroomJsonObj = showroomSchema.dump(showroomModel)
 
         # Check if Showroom exist
         if not showroomJsonObj:
-            abort(400, message="Showrooms not exist")
+            abort(400, message="Showroom not exist")
 
         # Prepeied result for all showrooms
-        showroomsArray = []
-        for showroom in showroomJsonObj:
-            showroomInfo = {}
-            phoneArr, emailArr = [], []
-            showroomInfo['address'] = showroom['address']
+        return showroomJsonObj
 
-            for email in showroom['email'].split(';'):
-                emailArr.append(email.rstrip().lstrip())
-            showroomInfo['email'] = emailArr
-
-            for phone in showroom['phone'].split(';'):
-                phoneArr.append(phone.rstrip().lstrip())
-            showroomInfo['phone'] = phoneArr
-
-            showroomsArray.append(showroomInfo)
-        return showroomsArray
-
-    # Create showroom
-    @doc(description='Add new showroom. Arguments ("address", "email", "phone") - required', tags=['Contact'])
-    def post(self):
-        # Get arguments from form
+    # Edit showroom
+    @doc(description='Edit showroom. Arguments ("address", "email", "phone") - required', tags=['Contact'])
+    def put(self, shoowroom_id):
+        # Get arguments from form and DB
         args = contactPostArgs.parse_args()
-
-        # Create showroom object
+        showroom = ShowroomModel.query.get(shoowroom_id)
         schema = ShowroomSchema()
-        showroomInfo = ShowroomModel()
-        showroomInfo.address = args["address"]
-        showroomInfo.email = args["email"]
-        showroomInfo.phone = args["phone"]
+
+        # Edit showroom object
+        showroom.address = args["address"]
+        showroom.email = args["email"]
+        showroom.phone = args["phone"]
 
         # Save showroom object
         try:
-            db.session.add(showroomInfo)
             db.session.commit()
         except IntegrityError as e:
             abort(400, message="Showroom dublicated")
 
-        return {"message": "Showroom successfully created", "contact": schema.dump(showroomInfo)}, 201
+        return {"message": "Showroom successfully created", "contact": schema.dump(showroom)}, 201
+
+    # Delete showroom
+    @doc(description='Delete showroom by id', tags=['Contact'])
+    def delete(self, shoowroom_id):
+        if ShowroomModel.query.get(shoowroom_id) == None:
+            abort(404, message="Showroom not found")
+        deleteShowroomById = ShowroomModel.query.get(int(shoowroom_id))
+        db.session.delete(deleteShowroomById)
+        db.session.commit()
+        return "Showroom successfully deleted", 204

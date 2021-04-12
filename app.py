@@ -10,6 +10,7 @@ from controllers.services_controller import ServicesController
 from controllers.service_controller import ServiceController
 from controllers.service_swich_controller import ServiceSwitchController
 from controllers.contact_controller import ContactController
+from controllers.showrooms_controller import ShowroomsController
 from controllers.showroom_controller import ShowroomController
 
 
@@ -55,7 +56,10 @@ docs.register(ServiceSwitchController)
 api.add_resource(ContactController, "/contact")
 docs.register(ContactController)
 
-api.add_resource(ShowroomController, "/contact/showroom")
+api.add_resource(ShowroomsController, "/contact/showroom")
+docs.register(ShowroomsController)
+api.add_resource(ShowroomController,
+                 "/contact/showroom/<int:shoowroom_id>")
 docs.register(ShowroomController)
 
 if __name__ == "__main__":
