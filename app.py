@@ -12,6 +12,7 @@ from controllers.service_swich_controller import ServiceSwitchController
 from controllers.contact_controller import ContactController
 from controllers.showrooms_controller import ShowroomsController
 from controllers.showroom_controller import ShowroomController
+from controllers.category_controller import CategoryController
 
 
 # init app
@@ -62,5 +63,8 @@ api.add_resource(ShowroomController,
                  "/contact/showroom/<int:shoowroom_id>")
 docs.register(ShowroomController)
 
+# Product routs
+api.add_resource(CategoryController, "/products")
+docs.register(CategoryController)
 if __name__ == "__main__":
     app.run(debug=True)
