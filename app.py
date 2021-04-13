@@ -14,6 +14,7 @@ from controllers.showrooms_controller import ShowroomsController
 from controllers.showroom_controller import ShowroomController
 from controllers.categories_controller import CategoriesController
 from controllers.category_controller import CategoryController
+from controllers.products_controller import ProductsController
 
 
 # init app
@@ -65,12 +66,15 @@ api.add_resource(ShowroomController,
 docs.register(ShowroomController)
 
 # Product routs
-api.add_resource(CategoriesController, "/products")
+api.add_resource(CategoriesController, "/products/category")
 docs.register(CategoriesController)
 
 api.add_resource(CategoryController,
                  "/products/category/<int:category_id>")
 docs.register(CategoryController)
+
+api.add_resource(ProductsController, "/products")
+docs.register(ProductsController)
 
 if __name__ == "__main__":
     app.run(debug=True)

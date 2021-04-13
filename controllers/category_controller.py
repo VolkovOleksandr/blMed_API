@@ -3,7 +3,7 @@ from flask_apispec import marshal_with, doc
 from flask_apispec.views import MethodResource
 from sqlalchemy.exc import IntegrityError
 
-from models.categories import CategoriesModel
+from models.categories import Categories
 from models.category_schema import CategorySchema
 from models.db import db
 
@@ -22,7 +22,7 @@ class CategoryController(MethodResource, Resource):
     def get(self, category_id):
         # Parse data from DB to JSON
         categorySchema = CategorySchema()
-        categoryModel = CategoriesModel.query.get(category_id)
+        categoryModel = Categories.query.get(category_id)
         # Check if category exist
         if not categoryModel:
             abort(404, message="Category not found")
@@ -39,7 +39,7 @@ class CategoryController(MethodResource, Resource):
 
         # Create contact object
         schema = CategorySchema()
-        category = CategoriesModel.query.get(category_id)
+        category = Categories.query.get(category_id)
 
         if not category:
             abort(404, message="Category not found")
@@ -58,7 +58,7 @@ class CategoryController(MethodResource, Resource):
     @doc(description='Delete category by ID of product', tags=['Product'])
     def delete(self, category_id):
         # Parse data from DB to JSON
-        categoryObject = CategoriesModel.query.get(category_id)
+        categoryObject = Categories.query.get(category_id)
 
         # Check if category exist
         if not categoryObject:

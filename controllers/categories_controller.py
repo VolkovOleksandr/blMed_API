@@ -3,7 +3,7 @@ from flask_apispec import marshal_with, doc
 from flask_apispec.views import MethodResource
 from sqlalchemy.exc import IntegrityError
 
-from models.categories import CategoriesModel
+from models.categories import Categories
 from models.category_schema import CategorySchema
 from models.db import db
 
@@ -22,7 +22,7 @@ class CategoriesController(MethodResource, Resource):
     def get(self):
         # Parse data from DB to JSON
         categorySchema = CategorySchema(many=True)
-        categoryModel = CategoriesModel.query.all()
+        categoryModel = Categories.query.all()
         categoryJsonObj = categorySchema.dump(categoryModel)
 
         return categoryJsonObj
@@ -35,7 +35,7 @@ class CategoriesController(MethodResource, Resource):
 
         # Create contact object
         schema = CategorySchema()
-        category = CategoriesModel()
+        category = Categories()
         category.category = args["category"]
 
         # Save contact object
