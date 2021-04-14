@@ -8,7 +8,7 @@ from models.product_schema import ProductSchema
 
 # Products controller
 class ProductsByFeaturedController(MethodResource, Resource):
-    # Get All products
+    # Get festured products
     @doc(description='Get featured products', tags=['Product'])
     @marshal_with(ProductSchema(many=True))
     def get(self):
@@ -21,6 +21,6 @@ class ProductsByFeaturedController(MethodResource, Resource):
         if not productsByFeatured:
             abort(404, message="NO featured products")
 
-        categoryJsonObj = productSchema.dump(productsByFeatured)
+        featuresProdJsonObj = productSchema.dump(productsByFeatured)
 
-        return categoryJsonObj
+        return featuresProdJsonObj

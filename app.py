@@ -17,6 +17,7 @@ from controllers.category_controller import CategoryController
 from controllers.products_controller import ProductsController
 from controllers.products_by_category_controller import ProductsByCategoryController
 from controllers.product_by_featured import ProductsByFeaturedController
+from controllers.product_latest_controller import ProductsByLatestController
 
 # init app
 
@@ -88,5 +89,8 @@ api.add_resource(ProductsByFeaturedController,
                  "/products/featured")
 docs.register(ProductsByFeaturedController)
 
+api.add_resource(ProductsByLatestController,
+                 "/products/latest")
+docs.register(ProductsByLatestController)
 if __name__ == "__main__":
     app.run(debug=True)
