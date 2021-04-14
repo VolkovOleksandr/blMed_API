@@ -11,7 +11,15 @@ from models.db import db
 # PUT request fields
 ProductPutArgs = reqparse.RequestParser()
 ProductPutArgs.add_argument(
-    "category", type=str, help="Category is required", required=True)
+    "category_id", type=int, help="Category id is required", required=True)
+ProductPutArgs.add_argument("image_url", type=str)
+ProductPutArgs.add_argument(
+    "name", type=str, help="Name is required", required=True)
+ProductPutArgs.add_argument(
+    "description", type=str, help="Description is required", required=True)
+ProductPutArgs.add_argument(
+    "brand", type=str)
+ProductPutArgs.add_argument("featured", type=bool)
 
 
 # Product controller
@@ -45,27 +53,30 @@ class ProductController(MethodResource, Resource):
         db.session.commit()
         return "Product successfully deleted", 204
 
-    # # Edit category by ID
-    # @doc(description='Edit category. Argument ("category") - required', tags=['Category'])
-    # def put(self, category_id):
-    #     # Get arguments from form
-    #     args = ProductPutArgs.parse_args()
+    # Edit product by ID
+    @doc(description='Edit product by ID. Argument ("category_id", "image_url", "name", "description", "brand", "featured")', tags=['Product'])
+    def put(self, product_id):
+        # Get arguments from form
+        args = ProductPutArgs.parse_args()
 
-    #     # Create contact object
-    #     schema = CategorySchema()
-    #     category = Categories.query.get(category_id)
+        # Get product form DB
+        schema = ProductSchema()
+        product = Products.query.get(product_id)
 
-    #     if not category:
-    #         abort(404, message="Category not found")
+        if not product:
+            abort(404, message="Product not found")
 
-    #     category.category = args["category"]
+        product.category_id = args["category_id"]
+        product.image_url = args["image_url"]
+        product.name = args["name"]
+        product.description = args["description"]
+        product.brand = args["brand"]
+        product.featured = args["featured"]
 
-    #     # Save contact object
-    #     try:
-    #         db.session.commit()
-    #     except IntegrityError as e:
-    #         abort(400, message="Category dublicated")
+        # Save product object
+        try:
+            db.session.commit()
+        except IntegrityError as e:
+            abort(400, message="Product dublicated")
 
-    #     return {"message": "Category successfully created", "category": schema.dump(category)}, 201
-
-    #
+        return {"message": "Product successfully updated", "product": schema.dump(product)}, 201

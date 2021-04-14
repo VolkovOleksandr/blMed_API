@@ -12,16 +12,14 @@ from models.db import db
 productPostArgs = reqparse.RequestParser()
 productPostArgs.add_argument(
     "category_id", type=int, help="Category ID is required", required=True)
-productPostArgs.add_argument(
-    "image_url", type=str)
+productPostArgs.add_argument("image_url", type=str)
 productPostArgs.add_argument(
     "name", type=str, help="Name of productis required", required=True)
 productPostArgs.add_argument(
     "description", type=str, help="Description is required", required=True)
 productPostArgs.add_argument(
     "brand", type=str)
-productPostArgs.add_argument(
-    "featured", type=bool)
+productPostArgs.add_argument("featured", type=bool)
 
 
 # Products controller
