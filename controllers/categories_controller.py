@@ -17,7 +17,7 @@ categoryPostArgs.add_argument(
 # Category controller
 class CategoriesController(MethodResource, Resource):
     # Get all category
-    @doc(description='Get all category of products', tags=['Product'])
+    @doc(description='Get all category of products', tags=['Category'])
     @marshal_with(CategorySchema(many=True))
     def get(self):
         # Parse data from DB to JSON
@@ -28,7 +28,7 @@ class CategoriesController(MethodResource, Resource):
         return categoryJsonObj
 
     # Create category
-    @doc(description='Create new category. Argument ("category") - required', tags=['Product'])
+    @doc(description='Create new category. Argument ("category") - required', tags=['Category'])
     def post(self):
         # Get arguments from form
         args = categoryPostArgs.parse_args()
