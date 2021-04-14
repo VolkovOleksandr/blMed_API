@@ -6,18 +6,23 @@ from flask_apispec.extension import FlaskApiSpec
 
 from models.db import db
 
+# Service Controllers
 from controllers.services_controller import ServicesController
 from controllers.service_controller import ServiceController
 from controllers.service_swich_controller import ServiceSwitchController
+# Contact controllers
 from controllers.contact_controller import ContactController
 from controllers.showrooms_controller import ShowroomsController
 from controllers.showroom_controller import ShowroomController
+# Category controllers
 from controllers.categories_controller import CategoriesController
 from controllers.category_controller import CategoryController
+# Product controllers
 from controllers.products_controller import ProductsController
 from controllers.products_by_category_controller import ProductsByCategoryController
 from controllers.product_by_featured import ProductsByFeaturedController
 from controllers.product_latest_controller import ProductsByLatestController
+from controllers.product_controller import ProductController
 
 # init app
 
@@ -80,6 +85,9 @@ docs.register(CategoryController)
 # Products routs
 api.add_resource(ProductsController, "/products")
 docs.register(ProductsController)
+
+api.add_resource(ProductController, "/product/<int:product_id>")
+docs.register(ProductController)
 
 api.add_resource(ProductsByCategoryController,
                  "/products/category/<int:category_id>")
