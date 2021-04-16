@@ -3,6 +3,7 @@ from flask_restful import Api
 from apispec import APISpec
 from apispec.ext.marshmallow import MarshmallowPlugin
 from flask_apispec.extension import FlaskApiSpec
+import os
 
 from models.db import db
 
@@ -23,8 +24,13 @@ from controllers.products_by_category_controller import ProductsByCategoryContro
 from controllers.product_by_featured import ProductsByFeaturedController
 from controllers.product_latest_controller import ProductsByLatestController
 from controllers.product_controller import ProductController
+from controllers.image_controller import ImageController
 
 # init app
+UPLOAD_IMAGE_DIRECTORY = os.getcwd() + "/images/"
+
+if not os.path.exists(UPLOAD_IMAGE_DIRECTORY):
+    os.makedirs(UPLOAD_IMAGE_DIRECTORY)
 
 
 def initApp():
@@ -100,5 +106,11 @@ docs.register(ProductsByFeaturedController)
 api.add_resource(ProductsByLatestController,
                  "/products/latest")
 docs.register(ProductsByLatestController)
+
+# Upload images for product
+api.add_resource(ImageController,
+                 "/image")
+docs.register(ImageController)
+
 if __name__ == "__main__":
     app.run(debug=True)
