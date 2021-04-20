@@ -17,7 +17,7 @@ categoryPutArgs.add_argument(
 # Category controller
 class CategoryController(MethodResource, Resource):
     # Get category by ID
-    @doc(description='Get category by ID of product', tags=['Category'])
+    @doc(description='Get category by ID', tags=['Category'])
     @marshal_with(CategorySchema())
     def get(self, category_id):
         # Parse data from DB to JSON
@@ -55,7 +55,7 @@ class CategoryController(MethodResource, Resource):
         return {"message": "Category successfully created", "category": schema.dump(category)}, 201
 
     # DELETE category by ID
-    @doc(description='Delete category by ID of product', tags=['Category'])
+    @doc(description='Delete category by ID', tags=['Category'])
     def delete(self, category_id):
         # Parse data from DB to JSON
         categoryObject = Categories.query.get(category_id)

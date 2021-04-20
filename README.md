@@ -1,3 +1,3 @@
-#### blMed REST API
+### blMed REST API
 
-### REST API for blMed.net
+#### REST API for blMed.net
