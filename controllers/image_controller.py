@@ -12,17 +12,8 @@ categoryPutArgs.add_argument(
 
 # Image controller
 class ImageController(MethodResource, Resource):
-    @doc(description='Get inage by name', tags=['Product'])
-    # @marshal_with(CategorySchema(many=True))
-    def get(self):
-        # # Parse data from DB to JSON
-        # categorySchema = CategorySchema(many=True)
-        # categoryModel = Categories.query.all()
-        # categoryJsonObj = categorySchema.dump(categoryModel)
 
-        return {}
     # Add new images to product
-
     @doc(description='Add images to product. Argument ("image"). Return images array', tags=['Product'])
     def post(self):
         # Get arguments from form
@@ -30,7 +21,6 @@ class ImageController(MethodResource, Resource):
         images_file = args['image']
 
         # Check all images from args
-        # print(images_file)
         imageIdArray = []
         for image in images_file:
             # Check if mime type of images acceptable
