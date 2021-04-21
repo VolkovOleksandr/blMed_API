@@ -26,6 +26,7 @@ from controllers.product_by_featured import ProductsByFeaturedController
 from controllers.product_latest_controller import ProductsByLatestController
 from controllers.product_controller import ProductController
 from controllers.image_controller import ImageController
+from controllers.image_get_controller import ImageGetController
 
 # init app
 UPLOAD_IMAGE_DIRECTORY = os.getcwd() + "/images/"
@@ -113,6 +114,9 @@ docs.register(ProductsByLatestController)
 api.add_resource(ImageController,
                  "/image")
 docs.register(ImageController)
+api.add_resource(ImageGetController,
+                 "/image/<string:image_name>")
+docs.register(ImageGetController)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(debug=True)

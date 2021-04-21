@@ -8,7 +8,7 @@ from models.db import db
 
 
 # Controller for Service Switch
-
+# TODO need to fix swap method
 
 # POST request fields
 servicesPatchArgs = reqparse.RequestParser()
