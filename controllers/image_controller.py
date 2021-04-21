@@ -14,7 +14,7 @@ categoryPutArgs.add_argument(
 class ImageController(MethodResource, Resource):
 
     # Add new images to product
-    @doc(description='Add images to product. Argument ("image"). Return images array', tags=['Product'])
+    @doc(description='Add new  images to product. Argument ("image"). Return images array', tags=['Product'])
     def post(self):
         # Get arguments from form
         args = categoryPutArgs.parse_args()
