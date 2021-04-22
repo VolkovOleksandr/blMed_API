@@ -32,7 +32,7 @@ class ShowroomController(MethodResource, Resource):
 
         # Check if Showroom exist
         if not showroomJsonObj:
-            abort(400, message="Showroom not exist")
+            abort(404, message="Showroom not found")
 
         # Prepeied result for all showrooms
         return showroomJsonObj
@@ -44,7 +44,9 @@ class ShowroomController(MethodResource, Resource):
         args = contactPostArgs.parse_args()
         showroom = ShowroomModel.query.get(shoowroom_id)
         schema = ShowroomSchema()
-
+        # Check if showroom is exist
+        if showroom == None:
+            abort(404, message="Showroom not found")
         # Edit showroom object
         showroom.address = args["address"]
         showroom.email = args["email"]
