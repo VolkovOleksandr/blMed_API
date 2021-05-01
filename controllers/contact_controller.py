@@ -29,7 +29,8 @@ class ContactController(MethodResource, Resource):
         contactSchema = ContactSchema()
         contactModel = ContactModel.query.first()
         contactJsonObj = contactSchema.dump(contactModel)
-
+        if contactModel == None:
+            return abort(404, message="Contact info not found")
         # Prepeied result contact info
         contactInfo = {}
         phoneArr, faxArr, emailArr = [], [], []

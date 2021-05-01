@@ -25,6 +25,10 @@ class ServiceSwitchController(MethodResource, Resource):
     # Get availeble all position
     @doc(description='Get all available position for specific ID', tags=['Services'])
     def get(self, service_id):
+        # Check if ID exist
+        if ServiceModel.query.get(service_id) == None:
+            abort(404, message="Servise not found")
+
         arrayOfPosition = []
         schema = ServiceSchema(many=True)
         serviceObjects = ServiceModel.query.all()
