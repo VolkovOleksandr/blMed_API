@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse, abort
 from flask_apispec import marshal_with, doc
 from flask_apispec.views import MethodResource
 from sqlalchemy.exc import IntegrityError
+from markdown import markdown
 
 from models.product import Products
 from models.product_schema import ProductSchema
@@ -69,7 +70,9 @@ class ProductController(MethodResource, Resource):
         product.category_id = args["category_id"]
         product.image_url = args["image_url"]
         product.name = args["name"]
-        product.description = args["description"]
+        # Format description to HTML
+        md = markdown(args["description"])
+        product.description = md.replace("\n", "<br/>")
         product.brand = args["brand"]
         product.featured = args["featured"]
 
