@@ -1,4 +1,4 @@
-from models.contact import ContactModel
+from flask import jsonify
 from flask_restful import Resource, reqparse, abort
 from flask_apispec import marshal_with, doc
 from flask_apispec.views import MethodResource
@@ -51,7 +51,7 @@ class ShowroomsController(MethodResource, Resource):
             showroomInfo['phone'] = phoneArr
 
             showroomsArray.append(showroomInfo)
-        return showroomsArray
+        return jsonify(showroomsArray)
 
     # Create showroom
     @doc(description='Add new showroom. Arguments ("address", "email", "phone") - required', tags=['Contact'])

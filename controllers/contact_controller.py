@@ -1,3 +1,4 @@
+from flask import jsonify
 from flask_restful import Resource, reqparse, abort
 from flask_apispec import marshal_with, doc
 from flask_apispec.views import MethodResource
@@ -40,15 +41,19 @@ class ContactController(MethodResource, Resource):
             emailArr.append(email.rstrip().lstrip())
         contactInfo['email'] = emailArr
 
-        for fax in contactJsonObj['fax'].split(';'):
-            faxArr.append(fax.rstrip().lstrip())
-        contactInfo['fax'] = faxArr
+        # Check if Fax exist if not return empty array
+        if contactJsonObj['fax'] == None:
+            contactInfo['fax'] = faxArr
+        else:
+            for fax in contactJsonObj['fax'].split(';'):
+                faxArr.append(fax.rstrip().lstrip())
+            contactInfo['fax'] = faxArr
 
         for phone in contactJsonObj['phone'].split(';'):
             phoneArr.append(phone.rstrip().lstrip())
         contactInfo['phone'] = phoneArr
 
-        return contactInfo
+        return jsonify(contactInfo)
 
     # Create contact
     @doc(description='Create contact info. Arguments ("person", "email", "phone") - required, "fax" not required', tags=['Contact'])
@@ -67,7 +72,8 @@ class ContactController(MethodResource, Resource):
         contactInfo.person = args["person"]
         contactInfo.email = args["email"]
         contactInfo.phone = args["phone"]
-        contactInfo.fax = args["fax"]
+        if args["fax"] != "":
+            contactInfo.fax = args["fax"]
 
         # Save contact object
         try:

@@ -57,6 +57,7 @@ class ProductsController(MethodResource, Resource):
         product.brand = args["brand"]
         product.featured = args["featured"]
 
+        print(args["description"])
         # Store product to DB
         try:
             db.session.add(product)

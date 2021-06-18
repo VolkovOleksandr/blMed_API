@@ -1,4 +1,4 @@
-from models.contact import ContactModel
+from flask import jsonify
 from flask_restful import Resource, reqparse, abort
 from flask_apispec import marshal_with, doc
 from flask_apispec.views import MethodResource
@@ -35,7 +35,7 @@ class ShowroomController(MethodResource, Resource):
             abort(404, message="Showroom not found")
 
         # Prepeied result for all showrooms
-        return showroomJsonObj
+        return jsonify(showroomJsonObj)
 
     # Edit showroom
     @doc(description='Edit showroom. Arguments ("address", "email", "phone") - required', tags=['Contact'])
